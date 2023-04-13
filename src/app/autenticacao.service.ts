@@ -24,6 +24,7 @@ export class Autenticacao {
                 firebase.database().ref(`usuario_detalhe/${btoa(resposta.email)}`)
                     .push(usuario)
                 alert('Usuário cadastrado com sucesso')
+                this.rotas.navigate(['/login']);
 
             })
             .catch((err: Error) => console.log(err))
@@ -43,6 +44,7 @@ export class Autenticacao {
                     .then((id: string) => {
                         this.token_id = id
                         console.log(this.token_id)
+                       // this.rotas.navigate(['/']);
                         this.rotas.navigate(['/home']);
 
                     })

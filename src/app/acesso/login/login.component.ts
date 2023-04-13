@@ -33,7 +33,7 @@ export class LoginComponent implements OnInit {
   }
 
   public deletar(): void {
-    //this.autenticacao.DeletarUsuario(this.formulario.value.email)
+    this.autenticacao.DeletarUsuarioBD(this.formulario.value.email)
     this.autenticacao.desativarConta()
   
   }
