@@ -1,0 +1,27 @@
+.card-title {
+    background-image: url("/assets/Vector.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 60px;
+    width: 100%;
+    
+}
+.card {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .form-group{
+    margin-bottom: 10px;
+    color: black;
+}
+.btn {
+    color: #21201f;
+    background-color: #FF8C00;
+}
+.card-link{
+    color: #FF8C00 ;
+}
+.small text-danger{
+    color: black;
+}
