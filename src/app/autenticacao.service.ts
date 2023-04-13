@@ -11,7 +11,7 @@ export class Autenticacao {
     public token_id: string = ""
 
     constructor(private rotas: Router) { }
-    public controle: boolean = false;
+
     public CadastrarUser(usuario: Usuario): Promise<any> {
         //this.contador ++       
         //console.log("Teste de recuperação dos dados de cadastro:",this.contador , usuario);
@@ -32,7 +32,7 @@ export class Autenticacao {
 
 
 
-    // função de autenticação utilizando a função nativa do firebase "signInWithEmailAndPassword"
+    // autenticação utilizando a função nativa do firebase "signInWithEmailAndPassword"
     public autenticar(email: string, senha: string) {
         console.log('autenticação realizada com sucesso através do sistema de autenticação do FireBase:')
         firebase.auth().signInWithEmailAndPassword(email, senha)
@@ -50,35 +50,39 @@ export class Autenticacao {
 
 
             })
-            .catch((err: Error) => console.log(err))
+            .catch((err: Error) => {
+                alert('algo deu errado')
+                console.log(err)
+            })
 
     }
 
-
+    // deleta usuário do banco de dados
     public DeletarUsuarioBD(email: string): Promise<any> {
-        // Utilize a referência do Firebase Realtime Database para acessar o nó onde os dados estão armazenados
+
         const ref = firebase.database().ref(`usuario_detalhe/${btoa(email)}`);
 
-        // Utilize o método remove() para deletar os dados
+
         return ref.remove()
             .then(() => {
-                // Ação de sucesso após deletar os dados
+
                 console.log('Dados deletados com sucesso');
             })
             .catch((err: Error) => {
-                // Ação em caso de erro ao deletar os dados
+
                 console.log(err);
             });
     }
 
 
+    //esta função só funcionará se o usuário estiver autenticado e deleta apenas do sistema de autenticação
 
     public desativarConta(): void {
         firebase.auth().currentUser?.delete()
             .then(() => {
-                
+
                 alert('Conta desativada com sucesso');
-                this.rotas.navigate(['/cadastro']); // Ou redirecione para a página de login
+                this.rotas.navigate(['/cadastro']); 
             })
             .catch((err: Error) => console.log(err));
     }
