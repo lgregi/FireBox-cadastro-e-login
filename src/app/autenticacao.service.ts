@@ -36,9 +36,9 @@ export class Autenticacao {
 
 
     // autenticação utilizando a função nativa do firebase "signInWithEmailAndPassword"
-    public autenticar(email: string, senha: string) {
+    public autenticar(email: string, senha: string) :Promise<any> {
         console.log('autenticação realizada com sucesso através do sistema de autenticação do FireBase:')
-        firebase.auth().signInWithEmailAndPassword(email, senha)
+       return firebase.auth().signInWithEmailAndPassword(email, senha)
             .then((resposta: any) => {
 
                 alert('Autenticação realizada com sucesso')
@@ -46,6 +46,7 @@ export class Autenticacao {
                     .then((id: string) => {
                         this.token_id = id
                         console.log(this.token_id)
+                        //serve para não deslogar se a página for recarregada, armazenando o token no localstorage
                         localStorage.setItem('id_token',id)
 
                         // redireciona para a rota após login
@@ -91,19 +92,17 @@ export class Autenticacao {
             .catch((err: Error) => console.log(err));
     }
 
+    
 
     public autenticado() :boolean{
 
         let ok :boolean = true
-
+        // enquanto o token o id_token estiver aramazenado no localstorage,  o sistema sabe que o usuário está logado
         if(this.token_id === undefined&& localStorage.getItem('id_token')!=null){
             this.token_id = localStorage.getItem('id_token')
             
         }
-        // se não tiver autenticado, direciona para a rota raiza
-        if(this.token_id ===undefined){
-            this.rotas.navigate(['/']);
-        }// se não tiver autenticado, direciona para a rota raiza
+        // se não tiver autenticado, direciona para a rota raiz
         if(this.token_id ===undefined){
             this.rotas.navigate(['/']);
         }
@@ -114,7 +113,7 @@ export class Autenticacao {
 
     }
 
-
+// função para deslogar, deletando o id aramazenado no localstorage e deslogando do firebase
     public sair (){
 
         firebase.auth().signOut()
