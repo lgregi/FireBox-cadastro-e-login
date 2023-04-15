@@ -10,17 +10,15 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
 
-    const firebaseConfig = {
-      apiKey: "AIzaSyDzBCoaDMY955ygrfPkiQHsmA_2ULwB9jo",
-      authDomain: "firebox-754d7.firebaseapp.com",
-      databaseURL: "https://firebox-754d7-default-rtdb.firebaseio.com",
-      projectId: "firebox-754d7",
-      storageBucket: "firebox-754d7.appspot.com",
-      messagingSenderId: "456061245370",
-      appId: "1:456061245370:web:fa43ef76f2d97d7ca8ef83",
-      measurementId: "G-BND4R0YFSR"
+    const firebaseConfig = { 
+      apiKey: "AIzaSyC1Gt3Yy7VcLaOI_5VJx8APk_JL9uve0eo", 
+      authDomain: "firebox-841fc.firebaseapp.com", 
+      databaseURL: "https://firebox-841fc-default-rtdb.firebaseio.com", 
+      projectId: "firebox-841fc", 
+      storageBucket: "firebox-841fc.appspot.com", 
+      messagingSenderId: "763892990586", 
+      appId: "1:763892990586:web:72a94cf8a56eb4f4ff31c3" 
     };
-
     
     
     firebase.initializeApp(firebaseConfig)

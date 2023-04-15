@@ -34,7 +34,11 @@ export class LoginComponent implements OnInit {
 
   public deletar(): void {
     this.autenticacao.DeletarUsuarioBD(this.formulario.value.email)
-    this.autenticacao.desativarConta()
+      .then(()=>{
+        //this.autenticacao.desativarConta()
+        console.log('teste')
+      }).catch(()=>console.log(''))
+    //this.autenticacao.desativarConta()
   
   }
 

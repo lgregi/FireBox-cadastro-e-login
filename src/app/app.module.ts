@@ -12,6 +12,7 @@ import { LoginComponent } from './acesso/login/login.component';
 import { CadastroComponent } from './acesso/cadastro/cadastro.component';
 import { HomeComponent } from './home/home.component';
 import { ProdutosComponent } from './home/produtos/produtos.component';
+import { AuthGuard } from './aut-guard.service';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,7 @@ import { ProdutosComponent } from './home/produtos/produtos.component';
     AppRoutingModule,
     ReactiveFormsModule
   ],
-  providers: [Autenticacao],
+  providers: [Autenticacao, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

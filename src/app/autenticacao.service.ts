@@ -8,9 +8,11 @@ export class Autenticacao {
 
 
 
-    public token_id: string = ""
+    public token_id: any
 
-    constructor(private rotas: Router) { }
+    constructor(private rotas: Router) { 
+        
+    }
 
     public CadastrarUser(usuario: Usuario): Promise<any> {
         //this.contador ++       
@@ -44,8 +46,11 @@ export class Autenticacao {
                     .then((id: string) => {
                         this.token_id = id
                         console.log(this.token_id)
-                       // this.rotas.navigate(['/']);
-                        this.rotas.navigate(['/home']);
+                        localStorage.setItem('id_token',id)
+
+                        // redireciona para a rota após login
+                       // this.rotas.navigate(['/'])
+                        this.rotas.navigate(['/home'])
 
                     })
 
@@ -60,21 +65,18 @@ export class Autenticacao {
     }
 
     // deleta usuário do banco de dados
-    public DeletarUsuarioBD(email: string): Promise<any> {
+    public async DeletarUsuarioBD(email: string): Promise<any> {
 
-        const ref = firebase.database().ref(`usuario_detalhe/${btoa(email)}`);
-
-
-        return ref.remove()
-            .then(() => {
-
-                console.log('Dados deletados com sucesso');
-            })
-            .catch((err: Error) => {
-
-                console.log(err);
-            });
+        const deletar = firebase.database().ref(`usuario_detalhe/${btoa(email)}`);
+    
+        try {
+            await deletar.remove();
+            console.log('Dados deletados com sucesso');
+        } catch (err) {
+            console.log(err);
+        }
     }
+    
 
 
     //esta função só funcionará se o usuário estiver autenticado e deleta apenas do sistema de autenticação
@@ -84,12 +86,44 @@ export class Autenticacao {
             .then(() => {
 
                 alert('Conta desativada com sucesso');
-                this.rotas.navigate(['/cadastro']); 
+               // this.rotas.navigate(['/cadastro']); 
             })
             .catch((err: Error) => console.log(err));
     }
 
 
+    public autenticado() :boolean{
+
+        let ok :boolean = true
+
+        if(this.token_id === undefined&& localStorage.getItem('id_token')!=null){
+            this.token_id = localStorage.getItem('id_token')
+            
+        }
+        // se não tiver autenticado, direciona para a rota raiza
+        if(this.token_id ===undefined){
+            this.rotas.navigate(['/']);
+        }// se não tiver autenticado, direciona para a rota raiza
+        if(this.token_id ===undefined){
+            this.rotas.navigate(['/']);
+        }
+        return this.token_id !==undefined
 
 
+        
+
+    }
+
+
+    public sair (){
+
+        firebase.auth().signOut()
+      .then(() => {
+        localStorage.removeItem('id_token')
+        this.token_id = undefined
+        this.rotas.navigate(['/']);
+      })
+      .catch((err) => {console.log(err)})
+        
+    }
 }
