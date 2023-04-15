@@ -30,8 +30,12 @@ export class LoginComponent implements OnInit {
 
   public autenticar(): void {
    this.autenticacao.autenticar(this.formulario.value.email, btoa(this.formulario.value.senha))
+   .then(()=>{
+    
+   })
+   .catch(err =>console.log(err))
   }
-
+/*
   public deletar(): void {
     this.autenticacao.DeletarUsuarioBD(this.formulario.value.email)
       .then(()=>{
@@ -41,6 +45,6 @@ export class LoginComponent implements OnInit {
     //this.autenticacao.desativarConta()
   
   }
-
+*/
   
 }
